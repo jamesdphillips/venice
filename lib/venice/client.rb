@@ -38,6 +38,10 @@ module Venice
       when 0, 21006
         receipt = Receipt.new(receipt_attributes)
 
+        if latest_receipt = json['latest_receipt']
+          receipt.latest_receipt = latest_receipt
+        end
+
         if latest_receipt_attributes = json['latest_receipt_info']
           receipt.latest = Receipt.new(latest_receipt_attributes)
         end

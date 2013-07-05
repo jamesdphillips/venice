@@ -30,6 +30,9 @@ module Venice
     # For a transaction that restores a previous transaction, this is the original receipt
     attr_accessor :original
 
+    # Latest receipt
+    attr_accessor :latest_receipt
+
     # For an active subscription was renewed with transaction that took place after the receipt your server sent to the App Store, this is the latest receipt.
     attr_accessor :latest
 
