@@ -6,7 +6,7 @@ describe 'Receipt Verification' do
   describe 'production' do
     it 'verifies a receipt' do
       lambda {
-        receipt = Venice::Receipt.verify!(RECEIPT_DATA)
+        receipt = Venice::Receipt.verify!(RECEIPT_DATA, production: false)
 
         receipt.quantity.should == 1
         receipt.product_id.should == "com.mindmobapp.download"

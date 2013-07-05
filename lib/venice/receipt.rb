@@ -1,4 +1,5 @@
 require 'time'
+require 'active_support/core_ext/hash/slice'
 
 module Venice
   class Receipt
@@ -87,17 +88,18 @@ module Venice
       end
 
       def verify!(data, options = {})
-        client = Client.production
+        client_options = options.slice(:production, :secret)
+        client = Client.new(client_options)
 
         begin
           client.verify!(data, options)
         rescue VerificationError => error
           case error.code
           when 21007
-            client = Client.development
+            client = Client.development(client_options)
             retry
           when 21008
-            client = Client.production
+            client = Client.production(client_options)
             retry
           else
             raise error

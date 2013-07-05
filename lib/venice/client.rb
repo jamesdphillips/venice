@@ -11,21 +11,23 @@ module Venice
     attr_writer :shared_secret
 
     class << self
-      def development
-        client = self.new
-        client.verification_url = ITUNES_DEVELOPMENT_RECEIPT_VERIFICATION_ENDPOINT
+      def development(options = {})
+        client = self.new(options.merge(production: false))
         client
       end
 
-      def production
-        client = self.new
-        client.verification_url = ITUNES_PRODUCTION_RECEIPT_VERIFICATION_ENDPOINT
+      def production(options = {})
+        client = self.new(options.merge(production: true))
         client
       end
     end
 
-    def initialize
+    def initialize(options = {})
+      options[:production] = Venice.production? unless options.key?(:production)
+      
+      @shared_secret = options[:secret] || Venice.shared_secret
       @verification_url = ENV['IAP_VERIFICATION_ENDPOINT']
+      @verification_url ||= options[:production] ? ITUNES_PRODUCTION_RECEIPT_VERIFICATION_ENDPOINT : ITUNES_DEVELOPMENT_RECEIPT_VERIFICATION_ENDPOINT
     end
 
     def verify!(data, options = {})
