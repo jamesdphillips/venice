@@ -30,6 +30,10 @@ module Venice
     # For a transaction that restores a previous transaction, this is the original receipt
     attr_accessor :original
 
+    # Subscription expired
+    attr_accessor :subscription_expired
+    alias :subscription_expired? :subscription_expired
+
     # Latest receipt
     attr_accessor :latest_receipt
 

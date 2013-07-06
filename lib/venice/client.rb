@@ -37,6 +37,7 @@ module Venice
       case status
       when 0, 21006
         receipt = Receipt.new(receipt_attributes)
+        receipt.subscription_expired = (status == 21006)
 
         if latest_receipt = json['latest_receipt']
           receipt.latest_receipt = latest_receipt
