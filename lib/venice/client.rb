@@ -38,13 +38,11 @@ module Venice
       when 0, 21006
         receipt = Receipt.new(receipt_attributes)
         receipt.subscription_expired = (status == 21006)
-
-        if latest_receipt = json['latest_receipt']
-          receipt.latest_receipt = latest_receipt
-        end
+        receipt.receipt_data = data
 
         if latest_receipt_attributes = json['latest_receipt_info']
           receipt.latest = Receipt.new(latest_receipt_attributes)
+          receipt.latest.receipt_data = json['latest_receipt']
         end
 
         if latest_expired_receipt_attributes = json['latest_expired_receipt_info']

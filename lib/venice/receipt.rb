@@ -3,6 +3,9 @@ require 'active_support/core_ext/hash/slice'
 
 module Venice
   class Receipt
+    # Receipt data
+    attr_accessor :receipt_data
+
     # The number of items purchased. This value corresponds to the quantity property of the SKPayment object stored in the transaction’s payment property.
     attr_reader :quantity
 
@@ -33,9 +36,6 @@ module Venice
     # Subscription expired
     attr_accessor :subscription_expired
     alias :subscription_expired? :subscription_expired
-
-    # Latest receipt
-    attr_accessor :latest_receipt
 
     # For an active subscription was renewed with transaction that took place after the receipt your server sent to the App Store, this is the latest receipt.
     attr_accessor :latest
